@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Uplift.DataAccess.Data;
+using Uplift.DataAccess.Data.Repository.Interfaces;
+using Uplift.DataAccess.Data.Repository;
 
 namespace Uplift.Web
 {
@@ -34,6 +36,7 @@ namespace Uplift.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
