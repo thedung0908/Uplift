@@ -8,12 +8,12 @@ namespace Uplift.DataAccess.Data.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
-        public ICategoryRepository categoryRepository { get; private set; }
+        public ICategoryRepository CategoryRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
-            categoryRepository = new CategoryRepository(_db);
+            CategoryRepository = new CategoryRepository(_db);
         }
 
         public void Dispose()
