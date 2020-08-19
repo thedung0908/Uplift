@@ -1,0 +1,40 @@
+﻿@model Uplift.Models.Category
+@{
+    var title = "Create New Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="Upsert">
+    <div class="row px-2 mx-2 border">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        @if (Model.Id != 0)
+        {
+            <input type="hidden" asp-for="Id" />
+            title = "Edit Category";
+        }
+        <div class="col-12">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-8">
+                    <input type="text" asp-for="Name" />
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DisplayOrder"></label>
+                </div>
+                <div class="col-8">
+                    <input type="text" asp-for="DisplayOrder" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
