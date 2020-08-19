@@ -14,6 +14,7 @@
         }
         <div class="col-12">
             <h2 class="text-primary">@title</h2>
+            <br />
         </div>
         <div class="col-8">
             <div class="form-group row">
@@ -21,7 +22,8 @@
                     <label asp-for="Name"></label>
                 </div>
                 <div class="col-8">
-                    <input type="text" asp-for="Name" />
+                    <input type="text" class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
                 </div>
             </div>
         </div>
@@ -31,8 +33,21 @@
                     <label asp-for="DisplayOrder"></label>
                 </div>
                 <div class="col-8">
-                    <input type="text" asp-for="DisplayOrder" />
+                    <input type="text" class="form-control" asp-for="DisplayOrder" />
+                    <span asp-validation-for="DisplayOrder"></span>
                 </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                @if (Model.Id != 0)
+                {
+                    <partial name="_EditAndBackToListButton" model="Model.Id" />
+                }
+                else
+                {
+                    <partial name="_CreateAndBackToListButton" />
+                }
             </div>
         </div>
     </div>

@@ -43,6 +43,26 @@ namespace Uplift.Web.Areas.Admin.Controllers
             return Json(new { data = _unitOfWork.CategoryRepository.GetAll() });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                if (category.Id == 0)
+                {
+                    _unitOfWork.CategoryRepository.Add(category);
+                }
+                else
+                {
+                    _unitOfWork.CategoryRepository.Update(category);
+                }
+                _unitOfWork.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
+
         [HttpDelete]
         public IActionResult Delete(int id)
         {
