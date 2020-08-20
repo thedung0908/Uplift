@@ -1,6 +1,6 @@
 ﻿@model Uplift.Models.Category
 @{
-    var title = "Create New Category";
+    var title = "Create Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -22,23 +22,19 @@
                     <label asp-for="Name"></label>
                 </div>
                 <div class="col-8">
-                    <input type="text" class="form-control" asp-for="Name" />
-                    <span asp-validation-for="Name"></span>
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
-        </div>
-        <div class="col-8">
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="DisplayOrder"></label>
                 </div>
                 <div class="col-8">
-                    <input type="text" class="form-control" asp-for="DisplayOrder" />
-                    <span asp-validation-for="DisplayOrder"></span>
+                    <input class="form-control" asp-for="DisplayOrder" />
+                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                 </div>
             </div>
-        </div>
-        <div class="col-8">
             <div class="form-group row">
                 @if (Model.Id != 0)
                 {
