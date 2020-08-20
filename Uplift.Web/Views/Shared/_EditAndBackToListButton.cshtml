@@ -1,5 +1,9 @@
 ﻿@model int
-<div class="col-12">
-    <button type="submit" class="btn btn-primary" asp-route-id="@Model">Update</button>
-    <a class="btn btn-success" asp-action="Index">Back To List</a>
+<div class="row">
+    <div class="col">
+        <button type="submit" class="btn btn-primary form-control" asp-route-id="@Model">Update</button>
+    </div>
+    <div class="col">
+        <a class="btn btn-success form-control" asp-action="Index">Back To List</a>
+    </div>
 </div>
