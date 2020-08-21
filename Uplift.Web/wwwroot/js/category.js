@@ -22,8 +22,8 @@ function loadDataTable() {
                                 <a onclick=Delete("/Admin/Category/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer;width:100px"><i class="fas fa-trash-alt"></i> Delete</a>
                             <div>
                             `
-                }
-                , width: '30%'
+                },
+                width: '30%'
             }
         ]
     });

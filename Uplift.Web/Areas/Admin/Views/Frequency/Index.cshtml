@@ -1,13 +1,36 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Frequency";
 }
-
-<div>
-    <table id="tblFrequency">
+<br />
+<div class="border">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Frequency List</h2>
+        </div>
+        <div class="col-6">
+            <a class="btn btn-primary float-right" asp-action="Upsert"><i class="fas fa-plus"></i>&nbsp;Create New Frequency</a>
+        </div>
+    </div>
+    <br />
+    <table id="tblFrequency" class="display">
         <thead>
-            
+            <tr>
+                <th>Name</th>
+                <th>Frequency Count</th>
+                <th>Action</th>
+            </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Frequency Count</th>
+                <th>Action</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/frequency.js"></script>
+} 
