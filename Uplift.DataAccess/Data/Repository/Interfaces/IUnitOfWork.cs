@@ -9,6 +9,7 @@ namespace Uplift.DataAccess.Data.Repository.Interfaces
     {
         ICategoryRepository CategoryRepository { get; }
         IFrequencyRepository FrequencyRepository { get; }
+        IServiceRepository ServiceRepository { get; }
         void Save();
     }
 }
