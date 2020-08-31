@@ -63,7 +63,7 @@ namespace Uplift.Web.Areas.Admin.Controllers
         public IActionResult Upsert(ServiceVM serviceVM, IFormFile file)
         {
             var files = HttpContext.Request.Form.Files;
-            var fileName = file.FileName;
+            var fileName = files.FileName;
             if (ModelState.IsValid)
             {
                 if (serviceVM.Service.Id == 0)
