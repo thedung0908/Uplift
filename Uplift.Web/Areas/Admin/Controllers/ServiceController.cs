@@ -88,16 +88,7 @@ namespace Uplift.Web.Areas.Admin.Controllers
                     // Update Service
                     if (!System.IO.File.Exists(serviceVM.Service.ImageUrl))
                     {
-                        if (serviceVM.Service.ImageUrl != uploadFile)
-                        {
 
-                        }
-
-                        using (var fileStream = new FileStream(uploadFile, FileMode.Create))
-                        {
-                            files[0].CopyTo(fileStream);
-                        }
-                        serviceVM.Service.ImageUrl = uploadFile;
                     }
 
                     _unitOfWork.ServiceRepository.Update(serviceVM.Service);
