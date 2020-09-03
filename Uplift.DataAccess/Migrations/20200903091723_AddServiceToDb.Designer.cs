@@ -10,7 +10,7 @@ using Uplift.DataAccess.Data;
 namespace Uplift.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200828054506_AddServiceToDb")]
+    [Migration("20200903091723_AddServiceToDb")]
     partial class AddServiceToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -270,14 +270,12 @@ namespace Uplift.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FrequencyID")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -56,26 +57,53 @@ namespace Uplift.Web.Areas.Admin.Controllers
         #region API CALLs
         public IActionResult GetAll()
         {
-            return Json(new { data = _unitOfWork.ServiceRepository.GetAll() });
+            return Json(new { data = _unitOfWork.ServiceRepository.GetAll(includeProperties : "Category,Frequency") });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(ServiceVM serviceVM, IFormFile file)
+        public IActionResult Upsert(ServiceVM serviceVM)
         {
-            var files = HttpContext.Request.Form.Files;
-            var fileName = files.FileName;
             if (ModelState.IsValid)
             {
+                var files = HttpContext.Request.Form.Files;
+                string webHostRoot = _hostEnvironment.WebRootPath;
+
+                var fileName = Guid.NewGuid().ToString() + "_" + files[0].FileName;
+                var uploadFolder = Path.Combine(webHostRoot, @"images\services");
+
                 if (serviceVM.Service.Id == 0)
                 {
+
                     // New Service
-                    string webHostRoot = _hostEnvironment.WebRootPath;
-                    
+                    using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    serviceVM.Service.ImageUrl = @"\images\services\" + fileName;
+                    _unitOfWork.ServiceRepository.Add(serviceVM.Service);
                 }
                 else
                 {
                     // Update Service
+                    if (!System.IO.File.Exists(serviceVM.Service.ImageUrl))
+                    {
+                        if (serviceVM.Service.ImageUrl != uploadFile)
+                        {
+
+                        }
+
+                        using (var fileStream = new FileStream(uploadFile, FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+                        serviceVM.Service.ImageUrl = uploadFile;
+                    }
+
+                    _unitOfWork.ServiceRepository.Update(serviceVM.Service);
                 }
+
+                _unitOfWork.Save();
 
                 return RedirectToAction(nameof(Index));
             }

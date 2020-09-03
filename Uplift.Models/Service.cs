@@ -20,11 +20,9 @@ namespace Uplift.Models
         [DisplayName("Price")]
         public double Price { get; set; }
         
-        [Required]
         [DisplayName("Description")]
         public string Description { get; set; }
         
-        [Required]
         [DataType(DataType.ImageUrl)]
         [DisplayName("Image URL")]
         public string ImageUrl { get; set; }

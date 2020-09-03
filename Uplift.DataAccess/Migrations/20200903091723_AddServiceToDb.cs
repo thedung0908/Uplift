@@ -14,8 +14,8 @@ namespace Uplift.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    ImageUrl = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     CategoryID = table.Column<int>(nullable: false),
                     FrequencyID = table.Column<int>(nullable: false)
                 },

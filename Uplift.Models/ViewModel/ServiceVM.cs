@@ -10,7 +10,6 @@ namespace Uplift.Models.ViewModel
     public class ServiceVM
     {
         public Service Service { get; set; }
-        public IFormFile Image { get; set; }
         public IEnumerable<SelectListItem> CategoryList { get; set; }
         public IEnumerable<SelectListItem> FrequencyList { get; set; }
     }

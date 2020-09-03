@@ -31,7 +31,7 @@
                     <label asp-for="Service.Price"></label>
                 </div>
                 <div class="col-8">
-                    <input class="form-control" asp-for="Service.Price" />
+                    <input class="form-control" id="txtPrice" asp-for="Service.Price"  />
                     <span asp-validation-for="Service.Price" class="text-danger"></span>
                 </div>
             </div>
@@ -49,24 +49,23 @@
                     <label asp-for="Service.ImageUrl"></label>
                 </div>
                 <div class="col-8">
-                    <input type="file" id="uploadBox" multiple class="form-control" asp-for="Image" />
-                    <span asp-validation-for="Image" class="text-danger"></span>
+                    <input type="file" name="file" id="uploadBox" multiple class="form-control" />
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Service.Category.Name"></label>
+                    <label asp-for="Service.CategoryID"></label>
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.CategoryList, Model.CategoryList, "-- Select a category--", new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Service.CategoryID, Model.CategoryList, "-- Select a Category--", new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Service.Frequency.Name"></label>
+                    <label asp-for="Service.FrequencyID"></label>
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.FrequencyList, Model.FrequencyList, "-- Select a frequency--", new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Service.FrequencyID, Model.FrequencyList, "-- Select a Frequency--", new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group row">
@@ -77,11 +76,42 @@
                     }
                     else
                     {
-                        <partial name="_CreateAndBackToListButton" />
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Create</button>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-success form-control" asp-action="Index">Back To List</a>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
         </div>
+        @if (Model.Service.Id != 0)
+        {
+            <div class="col-3">
+                <img class="card-img" src="@Model.Service.ImageUrl" />
+            </div>
+        }
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        function validateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal("Error", "Please select an Image!", "error");
+                return false;
+            }
+            return true;
+        };
+
+        $(document).ready(function () {
+            if (document.getElementById("txtPrice").value == "0") {
+                document.getElementById("txtPrice").value = "";
+            }
+        });
+    </script>
+}
 
