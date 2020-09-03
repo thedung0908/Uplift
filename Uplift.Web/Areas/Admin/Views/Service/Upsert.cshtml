@@ -31,7 +31,7 @@
                     <label asp-for="Service.Price"></label>
                 </div>
                 <div class="col-8">
-                    <input class="form-control" id="txtPrice" asp-for="Service.Price"  />
+                    <input class="form-control" id="txtPrice" asp-for="Service.Price" />
                     <span asp-validation-for="Service.Price" class="text-danger"></span>
                 </div>
             </div>
@@ -91,7 +91,13 @@
         @if (Model.Service.Id != 0)
         {
             <div class="col-3">
-                <img class="card-img" src="@Model.Service.ImageUrl" />
+                <img id="imgService" class="card-img" src="@Model.Service.ImageUrl" />
+            </div>
+        }
+        else
+        {
+            <div class="col-3">
+                <img id="imgService" class="card-img" src="#" style="display:none" />
             </div>
         }
     </div>
@@ -101,6 +107,13 @@
     <script>
         const uploadImage = document.getElementById("uploadBox");
         uploadImage.addEventListener('change', displayImage);
+
+        function displayImage(event) {
+            var img = document.getElementById("imgService");
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.style = "display:block";
+
+        };
 
         function validateInput() {
             if (document.getElementById("uploadBox").value == "") {

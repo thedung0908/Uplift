@@ -67,14 +67,13 @@ namespace Uplift.Web.Areas.Admin.Controllers
             {
                 var files = HttpContext.Request.Form.Files;
                 string webHostRoot = _hostEnvironment.WebRootPath;
-
-                var fileName = Guid.NewGuid().ToString() + "_" + files[0].FileName;
                 var uploadFolder = Path.Combine(webHostRoot, @"images\services");
 
                 if (serviceVM.Service.Id == 0)
                 {
-
                     // New Service
+
+                    var fileName = Guid.NewGuid().ToString() + "_" + files[0].FileName;
                     using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
                     {
                         files[0].CopyTo(fileStream);
@@ -86,9 +85,22 @@ namespace Uplift.Web.Areas.Admin.Controllers
                 else
                 {
                     // Update Service
-                    if (!System.IO.File.Exists(serviceVM.Service.ImageUrl))
+                    if (files.Count > 0)
                     {
+                        //remove old file
+                        if (System.IO.File.Exists(serviceVM.Service.ImageUrl))
+                        {
+                            System.IO.File.Delete(serviceVM.Service.ImageUrl);
+                        }
 
+                        //upload new file
+                        var fileName = Guid.NewGuid().ToString() + "_" + files[0].FileName;
+                        using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+
+                        serviceVM.Service.ImageUrl = @"\images\services\" + fileName;
                     }
 
                     _unitOfWork.ServiceRepository.Update(serviceVM.Service);
