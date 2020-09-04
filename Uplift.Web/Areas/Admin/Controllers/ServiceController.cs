@@ -85,12 +85,15 @@ namespace Uplift.Web.Areas.Admin.Controllers
                 else
                 {
                     // Update Service
+                    var objFromDB = _unitOfWork.ServiceRepository.Get(serviceVM.Service.Id);
+
                     if (files.Count > 0)
                     {
                         //remove old file
-                        if (System.IO.File.Exists(serviceVM.Service.ImageUrl))
+                        var imagePath = Path.Combine(webHostRoot, objFromDB.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(imagePath))
                         {
-                            System.IO.File.Delete(serviceVM.Service.ImageUrl);
+                            System.IO.File.Delete(imagePath);
                         }
 
                         //upload new file
@@ -102,6 +105,10 @@ namespace Uplift.Web.Areas.Admin.Controllers
 
                         serviceVM.Service.ImageUrl = @"\images\services\" + fileName;
                     }
+                    else
+                    {
+                        serviceVM.Service.ImageUrl = objFromDB.ImageUrl;
+                    }
 
                     _unitOfWork.ServiceRepository.Update(serviceVM.Service);
                 }
@@ -110,7 +117,29 @@ namespace Uplift.Web.Areas.Admin.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            serviceVM.CategoryList = _unitOfWork.CategoryRepository.GetCategoryForDropDown();
+            serviceVM.FrequencyList = _unitOfWork.FrequencyRepository.GetFrequencyForDropDown();
             return View(serviceVM);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            Service service = _unitOfWork.ServiceRepository.Get(id);
+            if (service != null)
+            {
+                string webHostRoot = _hostEnvironment.WebRootPath;
+                var imagePath = Path.Combine(webHostRoot, service.ImageUrl.TrimStart('\\'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+                _unitOfWork.ServiceRepository.Remove(service);
+                _unitOfWork.Save();
+                return Json(new { success = true, message = "Deleted successfully!" });
+            }
+            return Json(new { success = false, message = "Error while deleting this frequency." });
         }
         #endregion
     }
